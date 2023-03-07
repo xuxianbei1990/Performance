@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="college.performance.dao.MyPerformanceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="college.performance.model.MyPerformance">
+        <id column="id" property="id" />
+        <result column="year" property="year" />
+        <result column="period" property="period" />
+        <result column="activity_name" property="activityName" />
+        <result column="step" property="step" />
+        <result column="status" property="status" />
+        <result column="score" property="score" />
+        <result column="user_id" property="userId"/>
+        <result column="templatePerformance_id" property="templatePerformanceId"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, year, period, activity_name, step, status, score, templatePerformance_id
+    </sql>
+
+</mapper>
