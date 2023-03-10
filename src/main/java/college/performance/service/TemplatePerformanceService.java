@@ -5,6 +5,7 @@ import college.performance.dao.TemplatePerformanceMainMapper;
 import college.performance.model.Dto.TemplatePerformanceDto;
 import college.performance.model.TemplatePerformanceMain;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * Time: 18:04
  * Version:V1.0
  */
+@Service
 public class TemplatePerformanceService {
 
     @Resource

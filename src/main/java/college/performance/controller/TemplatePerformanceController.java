@@ -14,7 +14,7 @@ import java.util.List;
  * Time: 17:57
  * Version:V1.0
  */
-@RequestMapping("team/performance")
+@RequestMapping("template/performance")
 @RestController
 public class TemplatePerformanceController {
 
