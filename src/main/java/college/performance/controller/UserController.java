@@ -22,7 +22,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping("login")
-    public Integer login(@RequestParam String user, @RequestParam String pwd){
+    public UserMain login(@RequestParam String user, @RequestParam String pwd){
         return userService.login(user, pwd);
     }
 
@@ -39,5 +39,10 @@ public class UserController {
     @GetMapping("login/list")
     public List<UserMain> loginList(@RequestParam String user){
         return userService.loginList(user);
+    }
+
+    @GetMapping("list")
+    public List<UserMain> list(){
+        return userService.list();
     }
 }

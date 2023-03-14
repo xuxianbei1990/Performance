@@ -26,17 +26,16 @@ public class TaskPipelineService {
 
     public Integer add(TaskPipeline taskPipeline) {
         taskPipeline.setId(null);
-        LambdaQueryWrapper<TaskPipeline> lambdaQueryWrapper = new QueryWrapper<TaskPipeline>()
-                .select("MAX(step)").lambda();
-        TaskPipeline taskPipeline1 = taskPipelineMapper.selectOne(
-                lambdaQueryWrapper
-                        .eq(TaskPipeline::getTemplatePerformanceId, taskPipeline.getTemplatePerformanceId())
-                        .eq(TaskPipeline::getUserId, taskPipeline.getUserId()));
-        if (taskPipeline1 != null) {
-            taskPipeline.setStep(taskPipeline1.getStep() + 1);
-        } else {
-            taskPipeline.setStep(0);
-        }
+//        LambdaQueryWrapper<TaskPipeline> lambdaQueryWrapper = new QueryWrapper<TaskPipeline>()
+//                .select("MAX(step) step").lambda();
+//        TaskPipeline taskPipeline1 = taskPipelineMapper.selectOne(
+//                lambdaQueryWrapper
+//                        .eq(TaskPipeline::getTemplatePerformanceId, taskPipeline.getTemplatePerformanceId()));
+//        if (taskPipeline1 != null) {
+//            taskPipeline.setStep(taskPipeline1.getStep() + 1);
+//        } else {
+//            taskPipeline.setStep(0);
+//        }
         return taskPipelineMapper.insert(taskPipeline);
     }
 

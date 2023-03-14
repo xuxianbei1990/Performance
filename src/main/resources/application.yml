@@ -25,3 +25,13 @@ mybatis:
   #  mapper-locations: classpath:college/springcloud/order/mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+# Logger Config
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  level:
+    college:
+      performance:
+        dao: debug

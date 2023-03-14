@@ -1,9 +1,6 @@
 package college.performance.schedule;
 
-import college.performance.dao.MyPerformanceDetailMapper;
-import college.performance.dao.TemplatePerformanceDetailMapper;
-import college.performance.dao.TemplatePerformanceMainMapper;
-import college.performance.dao.TemplatePerformanceUserMapper;
+import college.performance.dao.*;
 import college.performance.model.*;
 import college.performance.service.PerformanceService;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -40,7 +37,7 @@ public class TaskGenerate {
     private PerformanceService performanceService;
 
     @Resource
-    private TemplatePerformanceUserMapper templatePerformanceUserMapper;
+    private TaskPipelineMapper taskPipelineMapper;
 
     public TaskGenerate() {
     }
@@ -52,10 +49,10 @@ public class TaskGenerate {
          * 2.向所有1一线发送绩效信息
          */
         List<TemplatePerformanceMain> mainList = templatePerformanceMainMapper.selectList(Wrappers.lambdaQuery(TemplatePerformanceMain.class));
-        List<TemplatePerformanceUser> userList = templatePerformanceUserMapper.selectList(Wrappers.lambdaQuery(TemplatePerformanceUser.class));
+        List<TaskPipeline> userList = taskPipelineMapper.selectList(Wrappers.lambdaQuery(TaskPipeline.class).eq(TaskPipeline::getStep, 0));
         List<TemplatePerformanceDetail> details = templatePerformanceDetailMapper.selectList(Wrappers.lambdaQuery(TemplatePerformanceDetail.class));
         mainList.forEach(templatePerformanceMain -> {
-            TemplatePerformanceUser templatePerformanceUser = userList.stream().filter(t -> t.getTemplatePerformanceId().equals(templatePerformanceMain.getId())).findFirst().get();
+            TaskPipeline templatePerformanceUser = userList.stream().filter(t -> t.getTemplatePerformanceId().equals(templatePerformanceMain.getId())).findFirst().get();
             MyPerformance myPerformance = new MyPerformance();
             myPerformance.setActivityName(templatePerformanceMain.getTemplateName());
             myPerformance.setUserId(templatePerformanceUser.getUserId());
@@ -64,6 +61,7 @@ public class TaskGenerate {
             myPerformance.setScore(BigDecimal.ZERO);
             myPerformance.setStatus(0);
             myPerformance.setStep(0);
+            myPerformance.setTemplatePerformanceId(templatePerformanceMain.getId());
             performanceService.add(myPerformance);
             List<TemplatePerformanceDetail> details1 = details.stream().filter(t -> t.getTemplatePerformanceId().equals(templatePerformanceMain.getId())).collect(Collectors.toList());
             details1.forEach(templatePerformanceDetail -> {

@@ -8,6 +8,8 @@
         <result column="user_id" property="userId" />
         <result column="template_performance_id" property="templatePerformanceId" />
         <result column="step" property="step" />
+        <result column="user_name" property="userName"/>
+        <result column="template_performance_name" property="templatePerformanceName"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

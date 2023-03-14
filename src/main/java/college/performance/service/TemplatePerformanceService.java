@@ -3,6 +3,7 @@ package college.performance.service;
 import college.performance.dao.TemplatePerformanceDetailMapper;
 import college.performance.dao.TemplatePerformanceMainMapper;
 import college.performance.model.Dto.TemplatePerformanceDto;
+import college.performance.model.TemplatePerformanceDetail;
 import college.performance.model.TemplatePerformanceMain;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,12 @@ public class TemplatePerformanceService {
     private TemplatePerformanceDetailMapper templatePerformanceDetailMapper;
 
     public List<TemplatePerformanceMain> list() {
-        return templatePerformanceMainMapper.selectList(Wrappers.lambdaQuery(TemplatePerformanceMain.class));
+        List<TemplatePerformanceMain> result = templatePerformanceMainMapper.selectList(Wrappers.lambdaQuery(TemplatePerformanceMain.class));
+        result.forEach(templatePerformanceMain -> {
+            templatePerformanceMain.setDetailList(templatePerformanceDetailMapper.selectList(Wrappers.lambdaQuery(TemplatePerformanceDetail.class)
+                    .eq(TemplatePerformanceDetail::getTemplatePerformanceId, templatePerformanceMain.getId())));
+        });
+        return result;
     }
 
     public Integer add(TemplatePerformanceDto templatePerformanceMain) {
@@ -34,6 +40,7 @@ public class TemplatePerformanceService {
         templatePerformanceMainMapper.insert(templatePerformanceMain.getTemplatePerformanceMain());
         templatePerformanceMain.getDetailList().forEach(templatePerformanceDetail -> {
             templatePerformanceDetail.setId(null);
+            templatePerformanceDetail.setTemplatePerformanceId(templatePerformanceMain.getTemplatePerformanceMain().getId());
             templatePerformanceDetailMapper.insert(templatePerformanceDetail);
         });
         return 1;
@@ -42,7 +49,12 @@ public class TemplatePerformanceService {
     public Integer update(TemplatePerformanceDto templatePerformanceMain) {
         templatePerformanceMainMapper.updateById(templatePerformanceMain.getTemplatePerformanceMain());
         templatePerformanceMain.getDetailList().forEach(templatePerformanceDetail -> {
-            templatePerformanceDetailMapper.updateById(templatePerformanceDetail);
+            if (templatePerformanceDetail.getId() != null) {
+                templatePerformanceDetailMapper.updateById(templatePerformanceDetail);
+            } else {
+                templatePerformanceDetail.setTemplatePerformanceId(templatePerformanceMain.getTemplatePerformanceMain().getId());
+                templatePerformanceDetailMapper.insert(templatePerformanceDetail);
+            }
         });
         return 1;
     }

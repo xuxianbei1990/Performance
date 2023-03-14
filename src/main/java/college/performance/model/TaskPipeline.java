@@ -34,9 +34,19 @@ public class TaskPipeline implements Serializable {
     private Integer userId;
 
     /**
+     * 用户名
+     */
+    private String userName;
+
+    /**
      * 我的绩效
      */
     private Integer templatePerformanceId;
+
+    /**
+     * 模板绩效名字
+     */
+    private String templatePerformanceName;
 
     /**
      * 步骤

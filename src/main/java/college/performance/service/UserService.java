@@ -20,20 +20,17 @@ public class UserService {
     @Resource
     private UserMainMapper userMainMapper;
 
-    public Integer login(String user, String pwd) {
+    public UserMain login(String user, String pwd) {
         UserMain userMain = userMainMapper.selectOne(Wrappers.lambdaQuery(UserMain.class)
                 .eq(UserMain::getUserName, user)
                 .eq(UserMain::getUserPwd, pwd));
-        if (userMain == null) {
-            return 0;
-        }
-        return 1;
+        return userMain;
     }
 
     public Integer register(UserMain userMain) {
         UserMain userMain2 = userMainMapper.selectOne(Wrappers.lambdaQuery(UserMain.class)
                 .eq(UserMain::getUserName, userMain.getUserName()));
-        if (userMain2 == null) {
+        if (userMain2 != null) {
             return 0;
         }
         return userMainMapper.insert(userMain);
@@ -45,5 +42,9 @@ public class UserService {
 
     public Integer update(UserMain userMain) {
         return userMainMapper.updateById(userMain);
+    }
+
+    public List<UserMain> list() {
+        return userMainMapper.selectList(Wrappers.lambdaQuery(UserMain.class).ne(UserMain::getRole, 2));
     }
 }
