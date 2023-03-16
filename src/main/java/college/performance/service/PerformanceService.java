@@ -1,7 +1,9 @@
 package college.performance.service;
 
+import college.performance.dao.MyPerformanceDetailMapper;
 import college.performance.dao.MyPerformanceMapper;
 import college.performance.model.MyPerformance;
+import college.performance.model.MyPerformanceDetail;
 import college.performance.model.TaskPipeline;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class PerformanceService {
 
     @Resource
     private MyPerformanceMapper myPerformanceMapper;
+
+    @Resource
+    private MyPerformanceDetailMapper myPerformanceDetailMapper;
 
     @Autowired
     private TaskPipelineService taskPipelineService;
@@ -44,9 +49,14 @@ public class PerformanceService {
         TaskPipeline taskPipeline = new TaskPipeline();
         taskPipeline.setUserId(myPerformance.getUserId());
         taskPipeline.setTemplatePerformanceId(myPerformance.getTemplatePerformanceId());
+        taskPipeline.setStep(myPerformance.getStep());
         TaskPipeline nextTask = taskPipelineService.nextTask(taskPipeline);
         myPerformance.setStep(nextTask.getStep());
         myPerformanceMapper.updateById(myPerformance);
         return 1;
+    }
+
+    public List<MyPerformanceDetail> detail(Integer id) {
+        return myPerformanceDetailMapper.selectList(Wrappers.lambdaQuery(MyPerformanceDetail.class).eq(MyPerformanceDetail::getMyPerformanceId, id));
     }
 }

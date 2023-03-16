@@ -1,6 +1,7 @@
 package college.performance.controller;
 
 import college.performance.model.MyPerformance;
+import college.performance.model.MyPerformanceDetail;
 import college.performance.service.PerformanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,11 @@ public class PerformanceController {
     @GetMapping("list")
     public List<MyPerformance> list(@RequestParam Integer userId) {
         return performanceService.list(userId);
+    }
+
+    @GetMapping("detail")
+    public List<MyPerformanceDetail> detail(@RequestParam Integer id){
+        return performanceService.detail(id);
     }
 
     @PostMapping("add")
