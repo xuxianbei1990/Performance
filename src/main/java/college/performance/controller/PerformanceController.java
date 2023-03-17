@@ -36,6 +36,11 @@ public class PerformanceController {
         return performanceService.add(myPerformance);
     }
 
+    @PostMapping("update/detail")
+    public Integer updateDetail(@RequestBody List<MyPerformanceDetail> list){
+        return performanceService.updateDetail(list);
+    }
+
     @PostMapping("update")
     public Integer update(@RequestBody MyPerformance myPerformance) {
         return performanceService.update(myPerformance);

@@ -39,6 +39,9 @@ public class TaskGenerate {
     @Resource
     private TaskPipelineMapper taskPipelineMapper;
 
+    @Resource
+    private TemplatePerformanceUserMapper templatePerformanceUserMapper;
+
     public TaskGenerate() {
     }
 
@@ -64,6 +67,11 @@ public class TaskGenerate {
             myPerformance.setTemplatePerformanceId(templatePerformanceMain.getId());
             performanceService.add(myPerformance);
             List<TemplatePerformanceDetail> details1 = details.stream().filter(t -> t.getTemplatePerformanceId().equals(templatePerformanceMain.getId())).collect(Collectors.toList());
+            TemplatePerformanceUser templatePerformanceUser1 = new TemplatePerformanceUser();
+            templatePerformanceUser1.setTemplatePerformanceId(templatePerformanceUser.getId());
+            templatePerformanceUser1.setUserId(templatePerformanceUser.getUserId());
+            templatePerformanceUser1.setPerformanceId(myPerformance.getId());
+            templatePerformanceUserMapper.insert(templatePerformanceUser1);
             details1.forEach(templatePerformanceDetail -> {
                 MyPerformanceDetail myPerformanceDetail = new MyPerformanceDetail();
                 BeanUtils.copyProperties(templatePerformanceDetail, myPerformanceDetail);

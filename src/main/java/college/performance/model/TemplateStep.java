@@ -9,16 +9,16 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 模板关联用户
+ * 模板步骤
  * </p>
  *
  * @author xuxianbei
- * @since 2023-03-07
+ * @since 2023-03-17
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("template_performance_user")
-public class TemplatePerformanceUser implements Serializable {
+@TableName("template_step")
+public class TemplateStep implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,16 +29,14 @@ public class TemplatePerformanceUser implements Serializable {
     private Integer id;
 
     /**
-     * 用户id
+     * 步骤id
      */
-    private Integer userId;
+    private Integer stepValue;
 
     /**
-     * 模板id
+     * 步骤
      */
-    private Integer templatePerformanceId;
-
-    private Integer performanceId;
+    private String stepName;
 
 
 }
