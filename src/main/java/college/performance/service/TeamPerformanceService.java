@@ -1,19 +1,18 @@
 package college.performance.service;
 
+import cn.hutool.core.collection.CollectionUtil;
 import college.performance.dao.MyPerformanceMapper;
 import college.performance.dao.TeamPerformanceMapper;
 import college.performance.dao.TemplateStepMapper;
 import college.performance.dao.UserMainMapper;
-import college.performance.model.MyPerformance;
-import college.performance.model.TeamPerformance;
-import college.performance.model.TemplateStep;
-import college.performance.model.UserMain;
+import college.performance.model.*;
 import college.performance.model.Vo.TeamPerformanceVo;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +39,9 @@ public class TeamPerformanceService {
                 .eq(TeamPerformance::getOwnerId, userid));
 
         List<Integer> integers = list.stream().map(TeamPerformance::getUserId).collect(Collectors.toList());
+        if (CollectionUtil.isEmpty(integers)) {
+            return new ArrayList<>();
+        }
 
         List<MyPerformance> myPerformances = myPerformanceMapper.selectList(Wrappers.lambdaQuery(MyPerformance.class).in(MyPerformance::getUserId, integers));
         List<UserMain> userMains = userMainMapper.selectList(Wrappers.lambdaQuery(UserMain.class).in(UserMain::getId, integers));
@@ -51,7 +53,6 @@ public class TeamPerformanceService {
             UserMain userMain = userMains.stream().filter(t -> t.getId().equals(teamPerformance.getUserId())).findFirst().get();
             vo.setDepartment(userMain.getDepartment());
             vo.setTeamMemberName(userMain.getUserName());
-            vo.setId(teamPerformance.getId());
             return vo;
         }).collect(Collectors.toList());
     }
@@ -62,5 +63,9 @@ public class TeamPerformanceService {
 
     public Integer delete(Integer id) {
         return teamPerformanceMapper.deleteById(id);
+    }
+
+    public List<TeamPerformance> team() {
+        return teamPerformanceMapper.selectList(Wrappers.lambdaQuery(TeamPerformance.class));
     }
 }

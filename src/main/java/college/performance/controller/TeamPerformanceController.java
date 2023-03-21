@@ -23,17 +23,22 @@ public class TeamPerformanceController {
     private TeamPerformanceService teamPerformanceService;
 
     @GetMapping("list")
-    public List<TeamPerformanceVo> list(@RequestParam Integer userid){
+    public List<TeamPerformanceVo> list(@RequestParam Integer userid) {
         return teamPerformanceService.list(userid);
     }
 
+    @GetMapping("team")
+    public List<TeamPerformance> team() {
+        return teamPerformanceService.team();
+    }
+
     @PostMapping("add")
-    public Integer add(@RequestBody TeamPerformance teamPerformance){
+    public Integer add(@RequestBody TeamPerformance teamPerformance) {
         return teamPerformanceService.add(teamPerformance);
     }
 
     @GetMapping("delete")
-    public Integer delete(@RequestParam Integer id){
+    public Integer delete(@RequestParam Integer id) {
         return teamPerformanceService.delete(id);
     }
 

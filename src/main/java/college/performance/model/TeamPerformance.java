@@ -33,10 +33,14 @@ public class TeamPerformance implements Serializable {
      */
     private Integer userId;
 
+    private String userName;
+
     /**
      * 团队拥有者id
      */
     private Integer ownerId;
+
+    private String ownerName;
 
 
 }
