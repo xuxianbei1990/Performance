@@ -2,6 +2,7 @@ package college.performance.controller;
 
 import college.performance.model.MyPerformance;
 import college.performance.model.MyPerformanceDetail;
+import college.performance.model.Vo.MyPerformanceVo;
 import college.performance.service.PerformanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class PerformanceController {
     private PerformanceService performanceService;
 
     @GetMapping("list")
-    public List<MyPerformance> list(@RequestParam Integer userId) {
+    public List<MyPerformanceVo> list(@RequestParam Integer userId) {
         return performanceService.list(userId);
     }
 

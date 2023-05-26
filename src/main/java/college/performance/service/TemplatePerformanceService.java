@@ -7,6 +7,7 @@ import college.performance.model.TemplatePerformanceDetail;
 import college.performance.model.TemplatePerformanceMain;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -56,6 +57,13 @@ public class TemplatePerformanceService {
                 templatePerformanceDetailMapper.insert(templatePerformanceDetail);
             }
         });
+        return 1;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Integer delete(Integer id) {
+        templatePerformanceMainMapper.deleteById(id);
+        templatePerformanceDetailMapper.delete(Wrappers.lambdaQuery(TemplatePerformanceDetail.class).eq(TemplatePerformanceDetail::getTemplatePerformanceId, id));
         return 1;
     }
 }

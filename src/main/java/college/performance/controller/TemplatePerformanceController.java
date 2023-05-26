@@ -35,4 +35,9 @@ public class TemplatePerformanceController {
     public Integer update(@RequestBody TemplatePerformanceDto templatePerformanceMain) {
         return templatePerformanceService.update(templatePerformanceMain);
     }
+
+    @GetMapping("delete")
+    public Integer delete(@RequestParam Integer id) {
+        return templatePerformanceService.delete(id);
+    }
 }

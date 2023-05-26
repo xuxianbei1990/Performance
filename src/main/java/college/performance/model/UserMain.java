@@ -36,6 +36,7 @@ public class UserMain implements Serializable {
     /**
      * 用户名
      */
+    @NotEmpty
     @NotBlank
     private String userName;
 
