@@ -38,7 +38,7 @@ public class TeamPerformanceVo implements Serializable {
     /**
      * 当前步骤
      */
-    private Integer step;
+    private String step;
 
     /**
      * 绩效状态
